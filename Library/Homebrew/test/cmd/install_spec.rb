@@ -1,9 +1,9 @@
-# typed: false
 # frozen_string_literal: true
 
+require "cmd/install"
 require "cmd/shared_examples/args_parse"
 
-describe "brew install" do
+RSpec.describe Homebrew::Cmd::InstallCmd do
   it_behaves_like "parseable arguments"
 
   it "installs formulae", :integration_test do
@@ -45,7 +45,7 @@ describe "brew install" do
     repo_path.join("bin").mkpath
 
     repo_path.cd do
-      system "git", "init"
+      system "git", "-c", "init.defaultBranch=master", "init"
       system "git", "remote", "add", "origin", "https://github.com/Homebrew/homebrew-foo"
       FileUtils.touch "bin/something.bin"
       FileUtils.touch "README"
